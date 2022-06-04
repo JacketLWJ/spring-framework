@@ -19,10 +19,7 @@ package org.springframework.beans.factory;
 import org.springframework.lang.Nullable;
 
 /**
- * Interface to be implemented by objects used within a {@link BeanFactory} which
- * are themselves factories for individual objects. If a bean implements this
- * interface, it is used as a factory for an object to expose, not directly as a
- * bean instance that will be exposed itself.
+ * 如果一个 Bean 实现了该接口则它将被作为一个工厂来使用，来产生各类对象，而不是直接暴露为 Bean
  *
  * <p><b>NB: A bean that implements this interface cannot be used as a normal bean.</b>
  * A FactoryBean is defined in a bean style, but the object exposed for bean
@@ -76,8 +73,7 @@ public interface FactoryBean<T> {
 
 
 	/**
-	 * Return an instance (possibly shared or independent) of the object
-	 * managed by this factory.
+	 * 返回一个实例，既可能是共享的也可能是独立的（单例和多例），由实现该接口的工厂决定
 	 * <p>As with a {@link BeanFactory}, this allows support for both the
 	 * Singleton and Prototype design pattern.
 	 * <p>If this FactoryBean is not fully initialized yet at the time of
@@ -96,8 +92,7 @@ public interface FactoryBean<T> {
 	T getObject() throws Exception;
 
 	/**
-	 * Return the type of object that this FactoryBean creates,
-	 * or {@code null} if not known in advance.
+	 * 返回该 FactoryBean 创建的对象类型，或者为空
 	 * <p>This allows one to check for specific types of beans without
 	 * instantiating objects, for example on autowiring.
 	 * <p>In the case of implementations that are creating a singleton object,
@@ -118,9 +113,7 @@ public interface FactoryBean<T> {
 	Class<?> getObjectType();
 
 	/**
-	 * Is the object managed by this factory a singleton? That is,
-	 * will {@link #getObject()} always return the same object
-	 * (a reference that can be cached)?
+	 * 返回当前 FactoryBean 管理的对象是否为单例（或者创建的对象是否能够缓存）
 	 * <p><b>NOTE:</b> If a FactoryBean indicates to hold a singleton object,
 	 * the object returned from {@code getObject()} might get cached
 	 * by the owning BeanFactory. Hence, do not return {@code true}

@@ -43,11 +43,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Encapsulates a Java {@link java.lang.reflect.Type}, providing access to
- * {@link #getSuperType() supertypes}, {@link #getInterfaces() interfaces}, and
- * {@link #getGeneric(int...) generic parameters} along with the ability to ultimately
- * {@link #resolve() resolve} to a {@link java.lang.Class}.
- *
+ * 封装 Java 类型描述 {@link java.lang.reflect.Type}，提供一下能力，
+ * 1 对父类和父接口的访问 {@link #getSuperType() supertypes}, {@link #getInterfaces() interfaces}
+ * 2 对泛型参数的访问 {@link #getGeneric(int...) generic parameters}
+ * 3 最终还原为 {@link java.lang.Class} 的能力
  * <p>A {@code ResolvableType} may be obtained from a {@linkplain #forField(Field) field},
  * a {@linkplain #forMethodParameter(Method, int) method parameter},
  * a {@linkplain #forMethodReturnType(Method) method return type}, or a

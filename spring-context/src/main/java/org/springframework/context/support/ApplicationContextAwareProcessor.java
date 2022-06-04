@@ -55,6 +55,8 @@ import org.springframework.util.StringValueResolver;
  * @see org.springframework.context.MessageSourceAware
  * @see org.springframework.context.ApplicationContextAware
  * @see org.springframework.context.support.AbstractApplicationContext#refresh()
+ *
+ * 用于 Aware 的后置处理器
  */
 class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
@@ -79,9 +81,11 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 				bean instanceof ResourceLoaderAware || bean instanceof ApplicationEventPublisherAware ||
 				bean instanceof MessageSourceAware || bean instanceof ApplicationContextAware ||
 				bean instanceof ApplicationStartupAware)) {
+			// 前置条件，检查是否实现了 Aware 接口
 			return bean;
 		}
 
+		// 调用 Aware
 		invokeAwareInterfaces(bean);
 		return bean;
 	}

@@ -162,6 +162,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/**
 	 * Boolean flag controlled by a {@code spring.spel.ignore} system property that instructs Spring to
 	 * ignore SpEL, i.e. to not initialize the SpEL infrastructure.
+	 * 用于设置是否忽略 Spring EL 语句
 	 * <p>The default is "false".
 	 */
 	private static final boolean shouldIgnoreSpel = SpringProperties.getFlag("spring.spel.ignore");
@@ -197,13 +198,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/** System time in milliseconds when this context started. */
 	private long startupDate;
 
-	/** Flag that indicates whether this context is currently active. */
+	/** 当前上下文是否激活的标志. */
 	private final AtomicBoolean active = new AtomicBoolean();
 
-	/** Flag that indicates whether this context has been closed already. */
+	/** 当前上下文是否关闭的标志 */
 	private final AtomicBoolean closed = new AtomicBoolean();
 
-	/** Synchronization monitor for the "refresh" and "destroy". */
+	/** 同步监视器，用于 "refresh" 和 "destroy" 阶段的同步. */
 	private final Object startupShutdownMonitor = new Object();
 
 	/** Reference to the JVM shutdown hook, if registered. */
@@ -550,6 +551,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// 完成资源文件加载和 BeanFactory 的配置，比如循环依赖等
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
@@ -681,6 +683,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// Tell the internal bean factory to use the context's class loader etc.
 		beanFactory.setBeanClassLoader(getClassLoader());
 		if (!shouldIgnoreSpel) {
+			// 如果没有忽略 Spring EL 表达式就进行基础设施设置
 			beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		}
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
@@ -1102,8 +1105,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Assert that this context's BeanFactory is currently active,
-	 * throwing an {@link IllegalStateException} if it isn't.
+	 * 检查当前 BeanFactory 上下文是否已经激活，
+	 * 如果没有激活则会抛出 {@link IllegalStateException}
 	 * <p>Invoked by all {@link BeanFactory} delegation methods that depend
 	 * on an active context, i.e. in particular all bean accessor methods.
 	 * <p>The default implementation checks the {@link #isActive() 'active'} status
@@ -1446,8 +1449,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	protected abstract void closeBeanFactory();
 
 	/**
-	 * Subclasses must return their internal bean factory here. They should implement the
-	 * lookup efficiently, so that it can be called repeatedly without a performance penalty.
+	 * 子类必须在这个方法返回内部的 BeanFactory，
+	 * 并且应该实现有效的查找，以便避免反复调用带来的性能损耗
 	 * <p>Note: Subclasses should check whether the context is still active before
 	 * returning the internal bean factory. The internal factory should generally be
 	 * considered unavailable once the context has been closed.

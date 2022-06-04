@@ -59,6 +59,7 @@ public interface ListableBeanFactory extends BeanFactory {
 
 	/**
 	 * Check if this bean factory contains a bean definition with the given name.
+	 * 检查当前 BeanFactory 是否包含指定名称的 bean
 	 * <p>Does not consider any hierarchy this factory may participate in,
 	 * and ignores any singleton beans that have been registered by
 	 * other means than bean definitions.
@@ -70,6 +71,7 @@ public interface ListableBeanFactory extends BeanFactory {
 
 	/**
 	 * Return the number of beans defined in the factory.
+	 * 返回这个工厂内包含的 Bean 的定义
 	 * <p>Does not consider any hierarchy this factory may participate in,
 	 * and ignores any singleton beans that have been registered by
 	 * other means than bean definitions.
@@ -79,6 +81,7 @@ public interface ListableBeanFactory extends BeanFactory {
 
 	/**
 	 * Return the names of all beans defined in this factory.
+	 * 返回工厂内所有 Bean 的名称
 	 * <p>Does not consider any hierarchy this factory may participate in,
 	 * and ignores any singleton beans that have been registered by
 	 * other means than bean definitions.
@@ -90,6 +93,7 @@ public interface ListableBeanFactory extends BeanFactory {
 	/**
 	 * Return a provider for the specified bean, allowing for lazy on-demand retrieval
 	 * of instances, including availability and uniqueness options.
+	 * 返回一个 Bean 的提供者，允许懒加载可用性和唯一性检查
 	 * @param requiredType type the bean must match; can be an interface or superclass
 	 * @param allowEagerInit whether stream-based access may initialize <i>lazy-init
 	 * singletons</i> and <i>objects created by FactoryBeans</i> (or by factory methods
@@ -125,9 +129,7 @@ public interface ListableBeanFactory extends BeanFactory {
 	<T> ObjectProvider<T> getBeanProvider(ResolvableType requiredType, boolean allowEagerInit);
 
 	/**
-	 * Return the names of beans matching the given type (including subclasses),
-	 * judging from either bean definitions or the value of {@code getObjectType}
-	 * in the case of FactoryBeans.
+	 * 返回指定类型的 Bean，从 Bean 的定义或者 FactoryBeans 的 getObjectType 方法判断
 	 * <p><b>NOTE: This method introspects top-level beans only.</b> It does <i>not</i>
 	 * check nested beans which might match the specified type as well.
 	 * <p>Does consider objects created by FactoryBeans, which means that FactoryBeans

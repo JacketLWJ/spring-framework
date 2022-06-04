@@ -19,6 +19,7 @@ package org.springframework.beans.factory.config;
 import org.springframework.lang.Nullable;
 
 /**
+ * 单例 Bean 的注册表实现接口，便于方便地公开单例 Bean
  * Interface that defines a registry for shared bean instances.
  * Can be implemented by {@link org.springframework.beans.factory.BeanFactory}
  * implementations in order to expose their singleton management facility
@@ -35,8 +36,7 @@ import org.springframework.lang.Nullable;
 public interface SingletonBeanRegistry {
 
 	/**
-	 * Register the given existing object as singleton in the bean registry,
-	 * under the given bean name.
+	 * 将指定的 Bean 根据名称，注册到注册表中，使其成为单例
 	 * <p>The given instance is supposed to be fully initialized; the registry
 	 * will not perform any initialization callbacks (in particular, it won't
 	 * call InitializingBean's {@code afterPropertiesSet} method).
@@ -58,7 +58,7 @@ public interface SingletonBeanRegistry {
 	void registerSingleton(String beanName, Object singletonObject);
 
 	/**
-	 * Return the (raw) singleton object registered under the given name.
+	 * 返回指定名称的 Bean
 	 * <p>Only checks already instantiated singletons; does not return an Object
 	 * for singleton bean definitions which have not been instantiated yet.
 	 * <p>The main purpose of this method is to access manually registered singletons
@@ -74,7 +74,7 @@ public interface SingletonBeanRegistry {
 	Object getSingleton(String beanName);
 
 	/**
-	 * Check if this registry contains a singleton instance with the given name.
+	 * 判断注册表中是否存在指定名称的 Bean 实例
 	 * <p>Only checks already instantiated singletons; does not return {@code true}
 	 * for singleton bean definitions which have not been instantiated yet.
 	 * <p>The main purpose of this method is to check manually registered singletons
@@ -98,7 +98,7 @@ public interface SingletonBeanRegistry {
 	boolean containsSingleton(String beanName);
 
 	/**
-	 * Return the names of singleton beans registered in this registry.
+	 * 返回注册表中所有 Bean 的名称
 	 * <p>Only checks already instantiated singletons; does not return names
 	 * for singleton bean definitions which have not been instantiated yet.
 	 * <p>The main purpose of this method is to check manually registered singletons
@@ -112,7 +112,7 @@ public interface SingletonBeanRegistry {
 	String[] getSingletonNames();
 
 	/**
-	 * Return the number of singleton beans registered in this registry.
+	 * 返回注册表中单例对象的数目
 	 * <p>Only checks already instantiated singletons; does not count
 	 * singleton bean definitions which have not been instantiated yet.
 	 * <p>The main purpose of this method is to check manually registered singletons
@@ -126,7 +126,7 @@ public interface SingletonBeanRegistry {
 	int getSingletonCount();
 
 	/**
-	 * Return the singleton mutex used by this registry (for external collaborators).
+	 * 返回当前注册表的使用的单例互斥锁
 	 * @return the mutex object (never {@code null})
 	 * @since 4.2
 	 */
