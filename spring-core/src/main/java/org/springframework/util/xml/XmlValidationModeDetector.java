@@ -81,6 +81,7 @@ public class XmlValidationModeDetector {
 
 
 	/**
+	 * 检测 XML 的验证方式
 	 * Detect the validation mode for the XML document in the supplied {@link InputStream}.
 	 * <p>Note that the supplied {@link InputStream} is closed by this method before returning.
 	 * @param inputStream the InputStream to parse
@@ -101,6 +102,7 @@ public class XmlValidationModeDetector {
 					continue;
 				}
 				if (hasDoctype(content)) {
+					// 如果存在 DOCTYPE 则为 DTD 验证方式
 					isDtdValidated = true;
 					break;
 				}
@@ -127,6 +129,7 @@ public class XmlValidationModeDetector {
 	}
 
 	/**
+	 * 所有的验证都会在文档开始符号之前 "<"
 	 * Determine if the supplied content contains an XML opening tag.
 	 * <p>It is expected that all comment tokens will have been consumed for the
 	 * supplied content before passing the remainder to this method. However, as

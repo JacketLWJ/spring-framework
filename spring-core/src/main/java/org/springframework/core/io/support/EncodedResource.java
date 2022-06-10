@@ -46,9 +46,11 @@ public class EncodedResource implements InputStreamSource {
 
 	private final Resource resource;
 
+	// 使用的字符编码
 	@Nullable
 	private final String encoding;
 
+	// 使用的字符集合
 	@Nullable
 	private final Charset charset;
 
@@ -136,6 +138,7 @@ public class EncodedResource implements InputStreamSource {
 	 * @see #getInputStream()
 	 */
 	public Reader getReader() throws IOException {
+		// 优先使用字符集作为编码依据
 		if (this.charset != null) {
 			return new InputStreamReader(this.resource.getInputStream(), this.charset);
 		}
